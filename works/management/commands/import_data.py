@@ -1,30 +1,29 @@
 from django.core.management.base import BaseCommand
+from works.models import Works
 import csv
-
-from works.models import Works, Contributor
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file_name', type=str, help='Name of the file to be imported')
     
-    def handle(self, *args, **kwargs):
+    def handle(self, **kwargs):
         file_name = kwargs['file_name']
         
         with open(file_name, 'r') as file:
             works_from_file = csv.DictReader(file)
             cleaned_works = []
-            # contributors = []
         
             for line in works_from_file: 
-
-                work_fields = (line['title'], line['iswc'])
-                contributor = line['contributors'].split('|')
+                contributor = tuple(line['contributors'].split('|'))
                 
-                if all(work_fields):
-                        cleaned_works.append(work_fields)
-        
-                # for contributor in contributor:
-                #     print(line['title'], '-', contributor)
-        
+                if all((line['title'], contributor, line['iswc'])):
+                    cleaned_works.append((line['title'], contributor, line['iswc']))
+                elif not line['iswc']:
+                    line['iswc'] = line['title'] + '-' + str(contributor[0]) 
+                    cleaned_works.append((line['title'], contributor, line['iswc']))
+                    
             for work in set(cleaned_works):
-                Works.objects.get_or_create(title=work[0], iswc=work[1])
+                try:
+                    Works.objects.get_or_create(title=work[0], contributors= work[1], iswc=work[2])
+                except:
+                    pass

@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'WorksSingleView.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'worksSingleView',
+        'NAME': 'works_single_view',
         'USER': 'postgres',
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': '127.0.0.1',

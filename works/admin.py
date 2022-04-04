@@ -1,7 +1,6 @@
 from operator import imod
 from django.contrib import admin
 
-from .models import Works, Contributor
+from .models import Works
 
 admin.site.register(Works)
-admin.site.register(Contributor)
