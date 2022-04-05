@@ -20,9 +20,9 @@ https://devcenter.heroku.com/articles/advanced-scheduler
 
 Exceute the code as a regular django command with 'import_data' and appending the file's name as an argument:
 
-'''
+```
 python manage.py import_data works_metadata.csv
-'''
+```
 
 
 # Works Single View API
@@ -41,6 +41,7 @@ I would also pair with the DBA for query optimization ideas such as index creati
 
 Query the API by just entering the url followed by the ISWC code
 
-'''
+```
 http://127.0.0.1:8000/<iswc>
-'''
+```
+
