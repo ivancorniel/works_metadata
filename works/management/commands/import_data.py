@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from works.models import Works
 import csv
 
@@ -26,4 +26,6 @@ class Command(BaseCommand):
                 try:
                     Works.objects.get_or_create(title=work[0], contributors= work[1], iswc=work[2])
                 except:
-                    pass
+                    CommandError('An error occured, please check and try again')
+                else: 
+                    self.stdout.write(self.style.SUCCESS('Data was saved successfully'))
